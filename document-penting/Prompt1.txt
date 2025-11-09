@@ -1,0 +1,639 @@
+Ini adalah briefing lengkap untuk proyek SaaS yang sedang kita bangun,kita sedang membangun saas saingan chatbase (coba search) apa aja fiturnya chatbase
+sebelumnya saya sudah buat saas dengan kamu di chat sebelumnya tapi context windows nya kepanjangan jadi chat sebelumnya error kamu akan melanjutkan projek panjang ini , dan kita baru sampai tahap ui ux belum sampe backend , kamu bisa lihat gambar yang gua kirim . Anggap ini sebagai satu-satunya sumber kebenaran. Peran saya adalah Project Manager dan peranmu adalah Lead Developer.
+saya mau kamu jadi full stack developer saya full , kamu adalah software engineer senior berpengalaman lebih dari 10 tahun dan sangat menguasai teknologi ai dan api beserta automation tools
+seperti activepieces atau n8n . kamu adalah senior developer fullstack yang sangat menguasai stack yang akan kita pakai , dan kamu saya minta ini bagian sangat sangat penting 
+kamu harus buat saas ini sangat sangat aman dengan fitur:
+
+Keamanan & privasi tingkat enterprise Kami menangani keamanan dan kepatuhan dengan serius
+
+Data Anda tetap milik Anda Data Anda hanya dapat diakses oleh agen AI Anda dan tidak pernah digunakan untuk melatih model.
+
+Enkripsi data Semua data dienkripsi saat disimpan (at rest) dan saat dikirim (in transit). Kami menggunakan algoritma enkripsi berstandar industri.
+
+Integrasi yang aman Kami menggunakan variabel terverifikasi untuk memastikan pengguna hanya dapat mengakses data milik mereka sendiri di sistem Anda. 
+
+
+
+## 1. Visi & Konsep Proyek
+
+Kita sedang membangun sebuah SaaS AI Chatbot Builder yang canggih, bertujuan untuk bersaing langsung dengan layanan seperti chatbase.co.
+
+
+
+Diferensiasi Utama (Killer Feature):
+
+Bukan hanya sekadar chatbot, platform kita adalah sebuah Automation Hub. Nilai jual utamanya adalah Template Otomasi Industri siap pakai. User bisa memilih template (misal: Real Estate, Restoran, E-commerce) dan langsung mendapatkan chatbot yang terintegrasi dengan alur kerja bisnis yang relevan.
+
+
+
+## 2. Arsitektur & Teknologi
+
+Ini adalah tumpukan teknologi (tech stack) lengkap yang akan kita gunakan untuk mewujudkan proyek ini:
+
+
+
+Frontend:
+
+
+
+Framework: Next.js 14 stable (App Router)
+
+
+
+Bahasa: TypeScript
+
+
+
+Styling: Tailwind CSS
+
+
+
+Backend - Fondasi & Pusat Komando:
+
+
+
+Platform: Supabase
+
+Fungsi:
+Database (PostgreSQL): Menyimpan semua data user, agent, history chat, kontak, dll. (Supabase)
+
+
+Authentication: Mengelola semua proses login, registrasi, dan manajemen user.
+
+
+Storage: Menyimpan file mentah (PDF, TXT) yang di-upload oleh user.
+
+
+
+Backend - Otak Pengetahuan (Proses Training AI):
+
+
+
+Konsep: Retrieval-Augmented Generation (RAG).
+
+
+
+Teknologi Inti: pgvector. Ekstensi di dalam database Supabase kita yang berfungsi sebagai Vector Database.
+
+
+
+Proses: Ekstraksi Teks -> Chunking -> Embedding -> Penyimpanan di pgvector.
+
+
+
+Backend - Otak Cerdas (Yang Menjawab Pertanyaan):
+
+
+
+Teknologi: Large Language Model (LLM) API (Contoh: GPT-4o/GPT-5 dari OpenAI, Gemini dari Google).
+
+
+
+Backend - Sutradara Otomasi (Yang Menjalankan Aksi):
+
+
+
+Teknologi: Activepieces (saingan n8n tapi pake licensi MIT) (Self-hosted).
+
+
+
+Fungsi: Menjalankan semua fitur di menu "Actions", template otomasi, dan integrasi kompleks.
+
+
+
+Integrasi Pihak Ketiga (Kunci & Izin):
+
+
+
+Teknologi: Aplikasi Kustom di Platform Developer (Contoh: Meta for Developers App).
+
+
+
+Fungsi: Untuk mendapatkan API Keys & Kredensial Resmi yang akan digunakan oleh activepieces.
+
+
+
+
+
+Dashboard Utama (Fitur dan Tombol):
+
+0.Create Framework (tempat dimana user baru pertama kali register di saas gw dan akan diminta membuat workspace , di saas saya dinamakan framework user diminta membuat (Nama framework dan url framework)
+
+1. Agents (Tempat User Membuat AI Agent) & user bisa menekan tombol Create New Agent jika tidak punya agent sama sekali , user juga punya pilihan menghapus agent jika tak diperlukan atau dibutuhkan
+
+
+
+
+
+
+
+2.Usage  (Tempat user melihat statistik penggunaan agents ) seperti udah berapa chat yang terpakai , di saas saya menggunakan sistem yang namanya (Point) masing masing plan dapat berbeda point nanti user bisa lihat berapa point yang udah dipake , misal pake chatgpt 4o yang mahal point nya besar , jika pake yang lebih murah point nya 1 dsb
+
+
+
+
+
+
+
+disini juga ada tempat melihat statistik sudah berapa agents yang dipakai user , dan berapa points yang sudah terpakai , juga ada statistik berapa point yang masing masing agent pakai 
+
+
+2. Conversations / Chat log
+
+
+
+dengan fungsi:Di sini lu bisa lihat riwayat percakapan user dengan chatbot. Bisa cek pertanyaan user, jawaban bot, durasi, timestamp, dll.
+Biasanya dipakai buat:
+Analisis apakah bot jawabannya sesuai.
+Cari percakapan yang gagal biar bisa diperbaiki.
+
+Export / download data chat (buat training ulang atau laporan).
+
+Intinya: tempat buat monitor interaksi nyata antara user & bot.
+
+
+4. Framework Settings 
+
+disini ada sub page , ada : 
+
+
+
+1. General : 📌 Jadi page ini ibarat pengaturan dasar identitas tempat lu bikin & manage agent
+
+
+
+
+
+
+
+2. Team : tempat user menambah orang lain untuk menyetting agent nya
+
+
+
+3.Billing : Tempat user melihat billing details , billing email (untuk dikirim invoice) , billing history (tempat untuk pembayaran history) , Billing method (tempat user memilih metode pembayaran) , kami menggunakan polar.sh dan akan pakai gpay atau aplepay dan paypal
+
+
+
+
+4. Plans : Tempat user melihat plans yang dipakai apa pro atau yang lebih tinggi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dan itu adalah bagian dashboard utama kemudian ada bagian create new agent (ketika users menekan tombol create new agents) maka pindah ke halaman baru dimana disini users membuat dan menyetting agents yang akan dibuat
+
+
+
+
+
+
+
+Berisi :
+
+
+
+1. Files (disini user bisa mengupload document txt , pdf dll untuk mentrain AI Agent )
+
+
+
+2. Text (Tempat user nulis teks manual yang fleksibel (FAQ, deskripsi, aturan, instruksi, dsb) untuk jadi knowledge base tambahan AI.)
+
+
+
+3.Q&A  (Tempat users membuat pertanyaan faq)
+
+
+
+4.Websites (Tempat user bisa taruh link website mereka dan di crawling untuk mengetahui dan melatih ai agent)
+
+
+
+
+
+
+
+kemudian jika user sudah selesai membuat settings agent nya , maka user akan memencet tombol create agent , nah disini masuk ke bagian (Agents Main Settings) seperti no 1 , 
+tapi sekarang user lihat kartu agents yang udah dibuat
+
+
+sekarang ketika agents udah dibuat atau pencet "create agent" user akan lanjut masuk ke page baru
+ untuk menyetting agents nya agar nyala dan fitur lain , akan gw jabarin fiturnya
+
+
+
+
+
+
+
+pertama user akan melihat
+
+
+
+
+
+
+
+tombol tombol , tombol pertama:
+
+
+
+1. Chat Studio :
+
+
+
+dengan fungsi :
+
+
+
+Tempat uji coba chatbot yang udah dilatih.
+
+
+
+Bisa simulasi percakapan langsung dengan bot, seolah-olah udah live.
+
+
+
+Cocok buat testing jawaban, gaya bahasa, dan akurasi sebelum di-deploy ke publik.
+
+
+
+Intinya kayak “laboratorium” buat eksperimen, bukan untuk user akhir.
+
+
+
+
+
+
+
+2. Conversations / Chat log
+
+
+
+dengan fungsi:
+
+
+
+Di sini lu bisa lihat riwayat percakapan user dengan chatbot.
+
+
+
+Bisa cek pertanyaan user, jawaban bot, durasi, timestamp, dll.
+
+
+
+Biasanya dipakai buat:
+
+
+
+Analisis apakah bot jawabannya sesuai.
+
+
+
+Cari percakapan yang gagal biar bisa diperbaiki.
+
+
+
+Export / download data chat (buat training ulang atau laporan).
+
+
+
+Intinya: tempat buat monitor interaksi nyata antara user & bot.
+
+
+
+
+
+
+
+3. Analytics
+
+
+
+dengan fungsi:
+
+
+
+Jumlah chat / percakapan dalam periode tertentu (harian, mingguan, bulanan).
+
+
+
+Statistik performa bot, misalnya:
+
+
+
+Berapa banyak pertanyaan user.
+
+
+
+Berapa banyak jawaban sukses vs gagal.
+
+
+
+Session length (berapa lama interaksi).
+
+
+
+Grafik tren percakapan → biar gampang ngeliat kapan user paling aktif.
+
+
+
+Filter & breakdown → misalnya per topik, per agent, atau per waktu.
+
+
+
+Intinya, halaman ini dipakai buat ngukur traffic & engagement chatbot lu.
+
+
+
+
+
+
+
+4.Sources ( nah ini sama aja pas user pertama kali setting agent nya) disini user bisa setting atau retrain agent ulang) 
+
+
+
+berisi : 
+
+
+
+1. Files (disini user bisa mengupload document txt , pdf dll untuk mentrain AI Agent )
+
+
+
+2. Text (Tempat user nulis teks manual yang fleksibel (FAQ, deskripsi, aturan, instruksi, dsb) untuk jadi knowledge base tambahan AI.)
+
+
+
+3.Q&A  (Tempat users membuat pertanyaan faq)
+
+
+
+4.Websites (Tempat user bisa taruh link website mereka dan di crawling untuk mengetahui dan melatih ai agent)
+
+
+
+
+
+
+
+
+
+
+
+5. Actions (👉 Di bagian ini, user bisa bikin AI Agent jadi lebih “hidup” karena nggak cuma jawab teks doang, tapi bisa lakukan sesuatu secara langsung)
+
+
+
+1. Fitur : Form → Ngumpulin data dari user, misalnya nama, email, nomor WA. Cocok buat lead generation atau daftar newsletter.
+
+
+
+2.Fitur : Button (Custom Button) → Nambahin tombol interaktif. Misalnya kalau user tanya harga, muncul tombol “Lihat Pricing” yang ngarah ke halaman tertentu.
+
+
+
+3.Fitur : Search (Web Search) → Kalau AI nggak tahu jawaban dari knowledge base, dia bisa cari langsung ke internet buat kasih jawaban terbaru.
+
+
+
+4.Fitur : Slack Integration → AI bisa ngirim pesan otomatis ke Slack tim user, misalnya buat notifikasi support atau laporan bug.
+
+
+
+5.Fitur : Cal.com / Calendly → AI bisa ambil jadwal meeting dari Cal.com/Calendly dan biarin user langsung booking slot waktu.
+
+
+
+6.Fitur : Custom API/Webhook → Ini bagian paling fleksibel, user bisa bikin AI panggil API eksternal. Misalnya: cek status order, update data user, atau integrasi ke sistem internal.
+
+
+
+
+
+
+
+✦ Intinya: Actions = bikin AI lu bisa ngelakuin hal nyata, bukan cuma ngobrol.
+
+
+
+
+
+
+
+User tinggal atur trigger (kapan action dipakai) → apa yang dilakukan → apa output ke user.
+
+
+
+
+
+
+
+6. Contacts : Nah, yang di screenshot ini bagian Contacts bro 👇
+
+
+
+
+
+
+
+Fungsi Contacts:
+
+
+
+Ini adalah database user yang pernah berinteraksi sama AI Agent lu.
+
+
+
+Jadi setiap kali ada orang chat sama chatbot, data mereka bisa masuk ke sini (misalnya nama, email, nomor, atau ID eksternal lain).
+
+
+
+Bisa dipakai buat CRM mini (Customer Relationship Management), supaya lu bisa follow up user, tracking history, atau integrasi ke tools lain (misalnya email marketing, CRM besar kayak HubSpot, atau Zapier/Make). List semua kontak → siapa aja yang pernah interaksi.
+
+
+
+Custom attributes (Manage attributes) → lu bisa nentuin kolom tambahan, misalnya:
+
+
+
+email
+
+
+
+phone
+
+
+
+last_seen
+
+
+
+subscription_status
+
+
+
+Search & Filter → gampang nyari kontak berdasarkan ID/email/nama.
+
+
+
+Bisa diintegrasiin ke sistem lain (contoh: otomatis sync ke Mailchimp buat email marketing).
+
+
+
+📌 Intinya: Contacts = tempat nyimpen & ngatur semua user yang udah ngobrol sama chatbot lu.
+
+
+
+
+
+
+
+7. Integrations
+
+
+
+Ini tempat buat nyebarin AI Agent ke platform lain supaya user bisa langsung interaksi. 
+
+
+
+
+
+
+
+Contohnya:
+
+
+
+Website Widget → pasang chatbox di website lewat iframe.
+
+
+
+Help Page → bikin halaman bantuan sendiri biar user bisa chat langsung.
+
+
+
+WordPress → integrasi langsung via plugin.
+
+
+
+WhatsApp → connect chatbot ke nomor WA bisnis.
+
+
+
+Instagram DM 
+
+
+
+Messenger FB 
+
+
+
+Telegram
+
+
+
+Line
+
+
+
+
+
+
+
+8.Settings
+
+
+
+1. Overview (tempat user bisa lihat agent id yang udah dibuat , tempat ganti nama agent , tempat delete agent permanent , tempat delete all conversations yang pernah agents tangani , dan tempat user bisa batasin (Maximum credits to be used by this agent from the credits available on the workspace.)
+
+
+
+
+
+
+
+2. AI LLM (Tempat user bisa pilih llm ai seperti gpt 5 ,4 , gemini dll)  & tempat user bisa retraining agents nya ulang , dan ada fitur retraining otomatis tiap 24 jam kalo user nyalakan
+
+
+
+
+
+
+
+3. Security (Tempat user bisa setting bahaya abuse dan visibility , disini user bisa buat agent nya public atau private , jika public (Other people can chat with your agent if you send them the link) , jika private (No one can access your agent except you (your account))
+
+
+
+dan untuk rate limit untuk menghindari abuse user bisa setting =Limit the number of messages sent from one device on the iframe and chat bubble (this limit will not be applied to you on chatbase.co, only on your website for your users to prevent abuse).
+
+
+
+
+
+
+
+4. Activity Alerts (Menu ini dipakai untuk atur notifikasi terkait aktivitas AI Agent kamu.
+
+
+
+
+
+
+
+Contohnya:
+
+
+
+Dapat notifikasi kalau ada pengguna baru chat dengan agent.
+
+
+
+Notifikasi kalau credits hampir habis.
+
+
+
+Update kalau ada error saat integrasi.
+
+
+
+Ringkasan harian/mingguan tentang performa agent.
+
+
+
+Intinya: biar kamu nggak perlu selalu buka dashboard, tapi bisa langsung dapet info penting via email, Slack, atau channel lain.)
+
+Dan gw juga nanti sebagai pemilik saas, saas kita ini harus aman banget gw belum tau harus pake teknologi apa , pokonya harus aman saas kita , dan juga lu diminta untuk search dulu chatbase.co itu apa dan fiturnya , dan simpan di otak
+oiya karna gw mau buat mvp nya dulu dan gw belum bikin cv ataupun pt , jadi integrasi wa ditunda dulu
+
+Oiya nama saas kita adalah kirichat.ai , dan lu harus tau atau search semuanya tentang chatbase.co karna kita akan bikin saingannya
+
+pricing di saas gw:
+1.40$ buat 3500 chat points . nanti sistem nya kan pake points , nah user dapet 4000 chat points ( nanti di backend lu harus buat sistem kaya gini yang bisa track pemakaian points user)
+2.80$ buat 7000 chat points ....
+3.100$ buat 10000 chat points .....
+
+user nanti bisa pilih model llm nya kalo pake kaya 4.0 mini atau 5.0 mini , kepake 1 point , tapi kalo pake yang mahal kaya 4.o atau 5.o pake 10 point , begitu juga llm yang lain , target pake gemini , chatgpt , dan deepseek dulu
+
+oiya gw juga mau pake pricing strategy berdasarkan geolocation , kalo user dari negara maju negara seperti arab yang maju , singapore , korea selatan ,jepang, taiwan , hongkong  eropa , amerika utara , australi , new zealand.
+maka pake pricing yang gw sebut di atas , tapi kalo negara berkembang , asia tenggara , turki , amerika selatan pake pricing beda
+
+pricing buat negara berkembang yang gw sebutin : 
+1.30$
+2.60$
+3.80$ dengan points yang sama seperti negara maju
+
+kemudian gw mau buat otomatis translate ke bahasa asli user  , ketika user datang
+
+terakhir , gw sebagai project manager minta kepada lu dengan serius , ini kritikal , ketika kode yang dihasilkan oleh lu error maximal 3 kali , maka disitu lu wajib searching ke web penyebab error dan cari penyebabnya di internet dan 
+kemudian benerin lagi kodenya setelah mencari jawaban di internet penyebab error

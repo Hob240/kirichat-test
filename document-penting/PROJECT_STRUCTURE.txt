@@ -1,0 +1,219 @@
+Struktur Proyek: kirichat-master (UI/UX MVP terlebih dahulu)
+
+Catatan:
+- Tanda # berisi penjelasan sederhana (bahasa awam).
+- Ini adalah rancangan folder/berkas. Tidak semua file wajib dibuat sekarang, tapi ini jadi peta jalan yang jelas.
+- Fokus awal: halaman-halaman dashboard dan komponen UI. Backend (Supabase/Activepieces/LLM) disambungkan bertahap.
+
+kirichat-master/
+├── .env.local                          # Rahasia dapur! Simpan API Key (Supabase, OpenAI, dsb). JANGAN di-commit ke Git.
+├── .gitignore                          # Daftar file/folder yang diabaikan Git (contoh: node_modules, .env.local).
+├── .eslintrc.json                      # Aturan linting (bikin kode rapi & konsisten).
+├── .prettierrc                         # Aturan format otomatis (spasi, kutip, dsb).
+├── next.config.js                      # Konfigurasi Next.js (opsional; bisa .mjs juga).
+├── package.json                        # Daftar dependencies + perintah npm (npm run dev/build/lint).
+├── postcss.config.js                   # Konfigurasi PostCSS (dipakai Tailwind).
+├── tailwind.config.js                  # Konfigurasi Tailwind CSS (warna, font, dsb).
+├── tsconfig.json                       # Konfigurasi TypeScript (path alias, strict mode).
+├── next-env.d.ts                       # File TypeScript otomatis dari Next.js.
+├── public/                             # Aset statis (diakses langsung via URL)
+│   ├── images/
+│   │   └── mask-group.svg              # Contoh ilustrasi (No Agents).
+│   ├── icons/
+│   │   └── logo.svg                    # Contoh ikon/logo sebagai file SVG.
+│   └── favicon.ico                     # Ikon tab browser.
+├── middleware.ts                       # Pintu masuk global (mis: redirect auth, deteksi bahasa/i18n).
+├── docs/                               # Dokumentasi internal (untuk tim)
+│   ├── SECURITY.md                     # Kebijakan keamanan & privasi (aturan main data user).
+│   ├── ROUTING.md                      # Peta rute halaman (biar dev konsisten).
+│   └── ARCHITECTURE.md                 # Ringkasan arsitektur (frontend, backend, integrasi).
+├── scripts/                            # Skrip bantuan (opsional)
+│   ├── verify-env.ts                   # Cek variabel .env sudah lengkap atau belum.
+│   └── seed-mocks.ts                   # Masukkan data dummy (untuk demo UI).
+├── .vscode/                            # Pengaturan editor (opsional, buat kenyamanan dev)
+│   └── settings.json                   # Autoformat, path alias, dsb.
+└── src/                                # JANTUNG aplikasi (semua kode utama)
+    ├── app/                            # Folder AJAIB Next.js (ngatur URL & Halaman)
+    │   ├── globals.css                 # CSS global (di-inject sekali untuk semua halaman).
+    │   ├── layout.tsx                  # Layout global (tema, font, provider, dsb).
+    │   ├── (auth)/                     # Halaman sebelum login (tanpa sidebar dashboard)
+    │   │   ├── login/
+    │   │   │   └── page.tsx            # Halaman Login.
+    │   │   └── register/
+    │   │       └── page.tsx            # Halaman Register (opsional).
+    │   ├── (marketing)/                # Landing page publik (opsional)
+    │   │   └── page.tsx                # Home publik (promo produk).
+    │   ├── (dashboard)/                # Halaman setelah login (pakai Sidebar + Topbar)
+    │   │   ├── layout.tsx              # Layout khusus dashboard (Sidebar/Topbar).
+    │   │   ├── page.tsx                # Redirect/overview (misal arahkan ke /agents).
+    │   │   ├── frameworks/
+    │   │   │   └── new/
+    │   │   │       └── page.tsx        # Onboarding “Create Framework” (nama + URL/slug).
+    │   │   ├── agents/
+    │   │   │   ├── page.tsx            # Daftar Agents (tampilan kartu + tombol “Create New Agent”).
+    │   │   │   ├── new/
+    │   │   │   │   └── page.tsx        # Wizard buat Agent (Sources: Files/Text/FAQ/Websites).
+    │   │   │   └── [agentId]/          # Halaman khusus 1 Agent
+    │   │   │       ├── page.tsx        # Redirect default ke chat-studio.
+    │   │   │       ├── chat-studio/
+    │   │   │       │   └── page.tsx    # Tempat uji coba chat (laboratorium).
+    │   │   │       ├── chat-log/
+    │   │   │       │   └── page.tsx    # Riwayat percakapan user dengan Agent.
+    │   │   │       ├── analytics/
+    │   │   │       │   └── page.tsx    # Statistik performa Agent (grafik, tren).
+    │   │   │       ├── sources/
+    │   │   │       │   └── page.tsx    # Pengelolaan sumber data & retrain.
+    │   │   │       ├── actions/
+    │   │   │       │   └── page.tsx    # Builder Actions (Form/Button/Search/Slack/Cal/API).
+    │   │   │       ├── contacts/
+    │   │   │       │   └── page.tsx    # CRM mini (list kontak + attributes).
+    │   │   │       ├── integrations/
+    │   │   │       │   └── page.tsx    # Embed widget, WordPress, IG/FB/Telegram, dsb.
+    │   │   │       └── settings/
+    │   │   │           ├── overview/
+    │   │   │           │   └── page.tsx# Info Agent, rename, delete, caps, dsb.
+    │   │   │           ├── ai-llm/
+    │   │   │           │   └── page.tsx# Pilih model AI, auto-retrain.
+    │   │   │           ├── security/
+    │   │   │           │   └── page.tsx# Public/private, rate-limit anti abuse.
+    │   │   │           └── activity-alerts/
+    │   │   │               └── page.tsx# Notifikasi (email, Slack, dsb).
+    │   │   ├── usage/
+    │   │   │   └── page.tsx            # Ringkasan penggunaan & points (per agent & total).
+    │   │   ├── framework-settings/
+    │   │   │   ├── general/
+    │   │   │   │   └── page.tsx        # Identitas framework (nama, slug).
+    │   │   │   ├── team/
+    │   │   │   │   └── page.tsx        # Kelola anggota & role.
+    │   │   │   ├── billing/
+    │   │   │   │   └── page.tsx        # Billing details, history, metode bayar (Polar).
+    │   │   │   └── plans/
+    │   │   │       └── page.tsx        # Pilih paket (geo-pricing).
+    │   │   └── pricing/
+    │   │       └── page.tsx            # Halaman pricing umum (opsional, publik).
+    │   └── api/                         # API route (backend kecil) – nanti dihubungkan ke Supabase
+    │       ├── auth/
+    │       │   └── route.ts            # Login/logout callback (placeholder).
+    │       ├── agents/
+    │       │   └── route.ts            # API CRUD agents (placeholder).
+    │       ├── usage/
+    │       │   └── route.ts            # Catat pemakaian points (placeholder).
+    │       └── webhooks/
+    │           ├── polar/
+    │           │   └── route.ts        # Webhook pembayaran dari Polar (billing).
+    │           └── activepieces/
+    │               └── route.ts        # Webhook/trigger dari Activepieces (otomasi).
+    ├── components/                      # Kumpulan blok UI siap pakai
+    │   ├── ui/                          # Komponen kecil (button, card, select, dsb).
+    │   ├── layout/                      # Sidebar, Topbar, separator.
+    │   ├── charts/                      # Komponen grafik (Usage/Analytics).
+    │   ├── forms/                       # Input kompleks (dropzone file, JSON editor, slug field).
+    │   ├── tables/                      # Tabel (Chat Log, Contacts, Usage).
+    │   ├── modals/                      # Popup (manage attributes, konfirmasi delete).
+    │   ├── agents/                      # Potongan UI khusus Agent (kartu, panel).
+    │   └── actions/                     # Blok builder untuk Actions (Form, Button, dsb).
+    ├── hooks/                           # Alat bantu logika sisi frontend
+    │   ├── useLocalStorage.ts           # Simpan state ke localStorage (dummy sebelum backend).
+    │   ├── useGeoPricing.ts             # Baca lokasi user → tentukan harga.
+    │   └── useI18n.ts                   # Deteksi bahasa & translate UI.
+    ├── store/                           # State global ringan (Zustand)
+    │   ├── frameworks.store.ts          # Data framework aktif & daftar framework.
+    │   ├── agents.store.ts              # Data agents (list, detail).
+    │   ├── usage.store.ts               # Data usage/points (per agent & total).
+    │   └─�� contacts.store.ts            # Data kontak & atribut kustom.
+    ├── services/                        # Jembatan ke layanan eksternal (nanti diaktifkan)
+    │   ├── supabase.ts                  # Inisialisasi client Supabase & helper.
+    │   ├── llm/
+    │   │   └── index.ts                 # Adapter ke OpenAI/Gemini/DeepSeek (pilih model).
+    │   ├── billing/
+    │   │   └── polar.ts                 # Integrasi Polar (checkout, langganan).
+    │   └── actions/
+    │       └── activepieces.ts          # Kirim/terima data dari Activepieces (otomasi).
+    ├── lib/                             # Utilitas umum & konstanta
+    │   ├── utils.ts                     # Fungsi kecil serbaguna.
+    │   ├── constants/
+    │   │   ├── points.ts                # Tabel biaya points per model AI.
+    │   │   ├── models.ts                # Daftar model AI (nama, vendor, dsb).
+    │   │   └── pricing.ts               # Aturan harga per wilayah (geo-pricing).
+    │   ├── validators/
+    │   │   └── slug.ts                  # Validasi & generator slug URL (aman).
+    │   └── security/
+    │       └── rateLimit.ts             # Aturan limitasi pesan (anti abuse) – UI level.
+    ├── types/                           # Definisi “bentuk data” (biar aman & jelas)
+    │   ├── agent.ts
+    │   ├── framework.ts
+    │   ├── conversation.ts
+    │   ├── usage.ts
+    │   ├── contact.ts
+    │   ├── action.ts
+    │   └── integration.ts
+    ├── mocks/                           # Data dummy (buat hidupkan UI tanpa backend)
+    │   ├── agents.ts
+    │   ├── conversations.ts
+    │   ├── usage.ts
+    │   └── contacts.ts
+    └── i18n/                            # Terjemahan bahasa
+        ├── config.ts                    # Setup i18n (bahasa default, deteksi).
+        └── locales/
+            ├── en.json                  # Terjemahan English.
+            └── id.json                  # Terjemahan Indonesia.
+
+Penjelasan singkat (bahasa awam):
+- src/app: Tempat semua halaman website. Folder (dashboard) berisi halaman setelah login (ada sidebar). Folder (auth) untuk login/register.
+- src/components: Kumpulan “kepingan UI” yang bisa dipakai ulang (tombol, kartu, tabel, modal, dll.).
+- src/store: Penyimpanan data sementara di front-end (biar halaman terasa hidup walau belum ada backend).
+- src/lib dan src/services: Otak kecil & jembatan ke layanan luar (Supabase/AI/Activepieces). Kita siapkan dulu kerangkanya.
+- docs: Dokumen panduan internal tim. Biar semua satu visi.
+
+Prioritas pengerjaan UI awal:
+1) /frameworks/new (Create Framework)
+2) /agents (daftar) dan /agents/new (wizard Sources)
+3) /agents/[agentId]/* (chat-studio, chat-log, analytics, sources, actions, contacts, integrations, settings/*)
+4) /usage dan /framework-settings/*
+5) Pricing & i18n (deteksi bahasa) menggunakan data dummy.
+
+
+Frontend vs Backend (bahasa awam):
+- Frontend (tampilan/yang dilihat dan diklik user):
+  - public/
+  - src/app/(auth)/**/page.tsx
+  - src/app/(marketing)/page.tsx
+  - src/app/(dashboard)/**/page.tsx dan layout.tsx
+  - src/components/**
+  - src/hooks/**
+  - src/store/**
+  - src/mocks/**
+  - src/i18n/**
+  - app/globals.css (atau styles/ jika dipakai)
+
+- Backend (mesin/pengelola data di server):
+  - src/app/api/**/route.ts (endpoint API berjalan di server)
+  - src/services/** (supabase.ts, llm/, billing/polar.ts, actions/activepieces.ts)
+  - middleware.ts (penjaga pintu global; bisa untuk redirect auth/i18n)
+  - scripts/** (alat bantu yang jalan di server/terminal)
+  - .env.local (menyimpan API Key dan rahasia)
+
+- Bersama/Umum (dipakai Frontend dan/atau Backend):
+  - src/lib/** (utils, constants, validators, security rules UI)
+  - src/types/** (bentuk data/tipe agar konsisten)
+  - docs/** (dokumentasi internal)
+
+
+Stack yang dipakai (ringkas):
+- Frontend:
+  - Next.js 14 (App Router) + TypeScript
+  - Tailwind CSS (styling)
+  - Zustand (state management ringan untuk MVP)
+  - Komponen UI kustom (gaya shadcn/ui kompatibel)
+- Backend:
+  - Supabase: PostgreSQL (database), Auth, Storage, RLS (Row-Level Security), pgvector (vector DB untuk RAG)
+  - LLM Providers via adapter: OpenAI (GPT-4o/5/mini), Google Gemini, DeepSeek
+  - Activepieces (self-hosted) untuk automation/actions
+  - Billing: Polar.sh (menghubungkan Stripe/Apple Pay/Google Pay/PayPal)
+- Keamanan (desain):
+  - Enkripsi in-transit (TLS) dan at-rest (DB/Storage)
+  - Isolasi data per workspace via RLS
+  - Webhook HMAC + anti replay, rate limiting, dan CSP ketat
+- Dev Tooling:
+  - ESLint, Prettier, PostCSS, Tailwind CLI
+  - .env.local untuk secrets (jangan di-commit)

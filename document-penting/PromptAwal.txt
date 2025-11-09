@@ -1,0 +1,1 @@
+tolong baca file @Prompt1.txt , sehabis baca baru pahamin @PROJECT_STRUCTURE.txt , kalo sudah baca @Prompt2.txt

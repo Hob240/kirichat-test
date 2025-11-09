@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Components layer helpers */
+@layer components {
+  .all-[unset] {
+    all: unset;
+  }
+}
+
+/* Design tokens (CSS variables) */
+:root {
+  --innere-shadow-gray-large: 0px 2px 4px 0px rgba(240, 241, 243, 1);
+  --innere-shadow-white-small: ;
+  --label-small-font-family: "Urbanist", Helvetica;
+  --label-small-font-size: 14px;
+  --label-small-font-style: normal;
+  --label-small-font-weight: 600;
+  --label-small-letter-spacing: 0.300000011920929px;
+  --label-small-line-height: 20px;
+  --wwwchatbasecoiron: rgba(212, 212, 216, 1);
+  --animate-spin: spin 1s linear infinite;
+  /* Uniform UI scale baseline 1366px */
+  --app-scale: clamp(0.62, calc(100vw / 1366), 2.812);
+}
+
+/* Checkpoint scaling to match specific monitors (non-overlapping ranges) */
+/* Small screens */
+@media (max-width: 639px) { :root { --app-scale: 0.62; } }
+@media (min-width: 640px) and (max-width: 767px) { :root { --app-scale: 0.68; } }
+@media (min-width: 768px) and (max-width: 1023px) { :root { --app-scale: 0.75; } } /* ~1024/1366 */
+@media (min-width: 1024px) and (max-width: 1279px) { :root { --app-scale: 0.844; } } /* ~1280/1366 */
+
+/* Baseline and nearby */
+@media (min-width: 1280px) and (max-width: 1365px) { :root { --app-scale: 0.938; } }
+@media (min-width: 1366px) and (max-width: 1439px) { :root { --app-scale: 1; } } /* 1366 baseline */
+
+/* Large monitors */
+@media (min-width: 1440px) and (max-width: 1599px) { :root { --app-scale: 1.054; } } /* ~1440/1366 */
+@media (min-width: 1600px) and (max-width: 1679px) { :root { --app-scale: 1.171; } } /* ~1600/1366 */
+@media (min-width: 1680px) and (max-width: 1919px) { :root { --app-scale: 1.231; } } /* ~1680/1366 */
+@media (min-width: 1920px) and (max-width: 2047px) { :root { --app-scale: 1.406; } } /* ~1920/1366 */
+@media (min-width: 2048px) and (max-width: 2559px) { :root { --app-scale: 1.5; } }   /* ~2048/1366 */
+@media (min-width: 2560px) and (max-width: 3839px) { :root { --app-scale: 1.874; } } /* ~2560/1366 */
+@media (min-width: 3840px) { :root { --app-scale: 2.812; } }                          /* ~3840/1366 */
+
+/* Animations and helpers */
+.animate-fade-in { animation: fade-in 1s var(--animation-delay, 0s) ease forwards; }
+.animate-fade-up { animation: fade-up 1s var(--animation-delay, 0s) ease forwards; }
+.animate-marquee { animation: marquee var(--duration) infinite linear; }
+.animate-marquee-vertical { animation: marquee-vertical var(--duration) linear infinite; }
+.animate-shimmer { animation: shimmer 8s infinite; }
+.animate-spin { animation: var(--animate-spin); }
+
+@keyframes spin { to { transform: rotate(1turn); } }
+@keyframes image-glow {
+  0% { opacity: 0; animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1); }
+  10% { opacity: 0.7; animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99); }
+  to { opacity: 0.4; }
+}
+@keyframes fade-in { 0% { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes fade-up { 0% { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes shimmer { 0%, 90%, to { background-position: calc(-100% - var(--shimmer-width)) 0; } 30%, 60% { background-position: calc(100% + var(--shimmer-width)) 0; } }
+@keyframes marquee { 0% { transform: translate(0); } to { transform: translateX(calc(-100% - var(--gap))); } }
+@keyframes marquee-vertical { 0% { transform: translateY(0); } to { transform: translateY(calc(-100% - var(--gap))); } }
+
+/* Extra animations for modal */
+.animate-fade-in-200 { animation: fade-in 1000ms var(--animation-delay, 0s) ease forwards; }
+.animate-scale-in { animation: scale-in 1000ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes scale-in { 0% { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+/* Tailwind CSS variable-based theme */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: transparent;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: transparent;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; font-feature-settings: "rlig" 1, "calt" 1; }
+}
+
+/* Hide scrollbars globally when needed */
+.no-scrollbar::-webkit-scrollbar { width: 0; height: 0; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Utilities: uniform scaling wrappers */
+@layer utilities {
+  .app-scale-wrapper { width: 100vw; height: 100dvh; overflow: auto; overscroll-behavior: contain; }
+  .app-scale { width: calc(100vw / var(--app-scale)); height: calc(100dvh / var(--app-scale)); transform: scale(var(--app-scale)); transform-origin: top left; overflow: visible; }
+}

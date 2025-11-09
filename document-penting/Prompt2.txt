@@ -1,0 +1,5 @@
+kalo sudah tolong buat folder baru bernama migrasi , isinya struktur folder dan file tsx 
+dibuat kosong dulu saat biar aman isi file .tsx nya , kemudian kalo sudah baru migrasi kan file file yang udah ada di dalam project ini
+ke folder migrasi seperti sidebar , topbar , usage dll yang ada di @src
+
+pastikan migrasi menggunakan cmd jangan powershell
