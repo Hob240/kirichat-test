@@ -1,8 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/dashboard/[workspaceId]/agents/page": "app/dashboard/[workspaceId]/agents/page.js",
-  "/dashboard/[workspaceId]/@modal/(.)framework-new/page": "app/dashboard/[workspaceId]/@modal/(.)framework-new/page.js",
-  "/dashboard/[workspaceId]/usage/page": "app/dashboard/[workspaceId]/usage/page.js",
-  "/dashboard/[workspaceId]/chat-log/page": "app/dashboard/[workspaceId]/chat-log/page.js",
-  "/dashboard/[workspaceId]/agent-new/[tab]/page": "app/dashboard/[workspaceId]/agent-new/[tab]/page.js"
-}
